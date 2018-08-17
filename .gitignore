@@ -25,4 +25,4 @@ hs_err_pid*
 # idea
 .mvn/
 mvnw
-mvnw.cnd
+mvnw.cmd
