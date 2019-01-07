@@ -5,6 +5,7 @@ import cc.ccoder.springbootexcel.service.UserService;
 import cc.ccoder.springbootexcel.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author ccoder.cc
  * @since 2019-1-7 15:14:55
  */
-@RestController
+@Controller
 public class UserController extends BaseController {
 
     private final UserService userService;
@@ -69,5 +70,10 @@ public class UserController extends BaseController {
             userVoList.add(userVo);
         }
         writeXLS(userVoList, UserVo.class, "所有用户信息");
+    }
+
+    @RequestMapping("index")
+    public String user(){
+        return "user";
     }
 }

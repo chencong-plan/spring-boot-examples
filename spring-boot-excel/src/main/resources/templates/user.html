@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>测试ajax下载</title>
+    <script type="text/javascript" th:src="@{jquery-3.2.1.js}"></script>
+</head>
+<body>
+
+<span>输入用户id,进行下载excel</span> <br>
+<span>不输入，下载全部</span> <br>
+<input class="tx-id" type="text" placeholder="输入用户id" autocomplete="false">
+<button class="btn-download">下载</button>
+<script>
+    $('.btn-download').click(function () {
+        var id = $('.tx-id').val();
+        var protocol = window.location.protocol;
+        var host = window.location.host;
+        window.location = protocol + '//' + host + '/excel/user/' + id;
+        console.log(id);
+    });
+</script>
+</body>
+</html>
