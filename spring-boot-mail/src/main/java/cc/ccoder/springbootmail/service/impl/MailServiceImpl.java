@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.internet.MimeMessage;
 
 /**
  * @author ccoder.cc
@@ -34,6 +37,24 @@ public class MailServiceImpl implements MailService {
         message.setSubject(subject);
         message.setText(content);
         try {
+            mailSender.send(message);
+            log.info("简单邮件已发送,邮件收件人:{},邮件发送人:{},邮件内容:{}", to, from, content);
+        } catch (Exception e) {
+            log.info("简单邮件发送发生异常,邮件收件人:{},邮件发送人:{},邮件内容:{},异常信息:", to, from, content, e);
+
+        }
+    }
+
+    @Override
+    public void sendSimpleHtmlMail(String to, String subject, String content, boolean isHtml) {
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            //true表示需要创建一个multipart message
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message,true);
+            messageHelper.setFrom(from);
+            messageHelper.setTo(to);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(content,isHtml);
             mailSender.send(message);
             log.info("简单邮件已发送,邮件收件人:{},邮件发送人:{},邮件内容:{}", to, from, content);
         } catch (Exception e) {

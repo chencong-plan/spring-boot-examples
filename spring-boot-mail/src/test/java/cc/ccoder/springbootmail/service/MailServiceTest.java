@@ -19,8 +19,23 @@ public class MailServiceTest {
     @Autowired
     private MailService mailService;
 
-    @Test
+//    @Test
     public void sendSimpleMail() {
         mailService.sendSimpleMail("chencong@jytpay.com","邮件标题","简单邮件内容");
+    }
+
+    @Test
+    public void sendSimpleHtmlMail(){
+        String content = "<html>\n" +
+                "<head>\n" +
+                "    <title>测试html邮件</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <h3>Hello World</h3>\n" +
+                "    <h4>这是一个html邮件</h4>\n" +
+                "    <a href=\"www.ccoder.cc\">聪聪不匆匆</a>\n" +
+                "</body>\n" +
+                "</html>";
+        mailService.sendSimpleHtmlMail("chencong@jytpay.com","邮件标题",content,true);
     }
 }
