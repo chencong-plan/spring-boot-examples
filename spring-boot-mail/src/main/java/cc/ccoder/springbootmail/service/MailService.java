@@ -1,5 +1,7 @@
 package cc.ccoder.springbootmail.service;
 
+import java.util.Map;
+
 /**
  * @author ccoder.cc
  * @since 2019-1-9 10:32:36
@@ -45,4 +47,10 @@ public interface MailService {
      * @param rscId
      */
     void sendInlineResourceMail(String to, String subject, String content, String rscPath, String rscId);
+
+    /**
+     * 发送固定邮件模板的邮件
+     * @param params 邮件模板中参数
+     */
+    void sendTemplateMail(Map<String,Object> params);
 }

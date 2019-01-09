@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 /**
@@ -47,9 +50,18 @@ public class MailServiceTest {
 
     @Test
     public void sendInlineResourceMail() {
-        String rscId = "neo006";
+        String rscId = "1";
         String content = "<html><body>这是有图片的邮件：<img src='cid:" + rscId + "' ></body></html>";
         String imgPath = "F:\\11.jpg";
         mailService.sendInlineResourceMail("chencong@jytpay.com", "这是一封带有静态图片的邮件", content, imgPath, rscId);
+    }
+
+//    @Test
+    public void sendTemplateEmail(){
+        Map<String,Object> params = new HashMap<>();
+        params.put("id","0001");
+        params.put("to","chencong@jytpay.com");
+        params.put("name","亲爱的小哥哥");
+        mailService.sendTemplateMail(params);
     }
 }
