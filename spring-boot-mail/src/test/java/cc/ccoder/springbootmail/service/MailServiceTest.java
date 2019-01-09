@@ -24,7 +24,7 @@ public class MailServiceTest {
         mailService.sendSimpleMail("chencong@jytpay.com","邮件标题","简单邮件内容");
     }
 
-    @Test
+//    @Test
     public void sendSimpleHtmlMail(){
         String content = "<html>\n" +
                 "<head>\n" +
@@ -37,5 +37,11 @@ public class MailServiceTest {
                 "</body>\n" +
                 "</html>";
         mailService.sendSimpleHtmlMail("chencong@jytpay.com","邮件标题",content,true);
+    }
+
+    @Test
+    public void sendAttachmentsMail(){
+        String filePath = "G:\\app\\depLogs\\cgservice\\cg-service.log";
+        mailService.sendAttachmentsMail("chencong@jytpay.com","邮件标题","测试邮件附件",filePath);
     }
 }

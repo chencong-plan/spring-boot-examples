@@ -24,4 +24,14 @@ public interface MailService {
      * @param isHtml  是否支持html，true表示需要创建一个multipart message
      */
     void sendSimpleHtmlMail(String to, String subject, String content, boolean isHtml);
+
+    /**
+     * 发送带有附件的邮件
+     *
+     * @param to       收件人
+     * @param subject  邮件标题
+     * @param content  邮件内容
+     * @param filePath 邮件附件文件路径
+     */
+    void sendAttachmentsMail(String to, String subject, String content, String filePath);
 }
