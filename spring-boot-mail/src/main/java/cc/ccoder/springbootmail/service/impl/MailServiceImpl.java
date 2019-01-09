@@ -85,4 +85,24 @@ public class MailServiceImpl implements MailService {
             log.info("简单邮件发送发生异常,邮件收件人:{},邮件发送人:{},邮件内容:{},异常信息:", to, from, content, e);
         }
     }
+
+    @Override
+    public void sendInlineResourceMail(String to, String subject, String content, String rscPath, String rscId) {
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+            messageHelper.setFrom(from);
+            messageHelper.setTo(to);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(content, true);
+
+            FileSystemResource fileSystemResource = new FileSystemResource(new File(rscPath));
+            messageHelper.addInline(rscId, fileSystemResource);
+
+            mailSender.send(message);
+            log.info("简单邮件已发送,邮件收件人:{},邮件发送人:{},邮件内容:{}", to, from, content);
+        } catch (Exception e) {
+            log.info("简单邮件发送发生异常,邮件收件人:{},邮件发送人:{},邮件内容:{},异常信息:", to, from, content, e);
+        }
+    }
 }

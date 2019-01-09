@@ -19,13 +19,13 @@ public class MailServiceTest {
     @Autowired
     private MailService mailService;
 
-//    @Test
+    //    @Test
     public void sendSimpleMail() {
-        mailService.sendSimpleMail("chencong@jytpay.com","邮件标题","简单邮件内容");
+        mailService.sendSimpleMail("chencong@jytpay.com", "邮件标题", "简单邮件内容");
     }
 
-//    @Test
-    public void sendSimpleHtmlMail(){
+    //    @Test
+    public void sendSimpleHtmlMail() {
         String content = "<html>\n" +
                 "<head>\n" +
                 "    <title>测试html邮件</title>\n" +
@@ -36,12 +36,20 @@ public class MailServiceTest {
                 "    <a href=\"www.ccoder.cc\">聪聪不匆匆</a>\n" +
                 "</body>\n" +
                 "</html>";
-        mailService.sendSimpleHtmlMail("chencong@jytpay.com","邮件标题",content,true);
+        mailService.sendSimpleHtmlMail("chencong@jytpay.com", "邮件标题", content, true);
+    }
+
+    //    @Test
+    public void sendAttachmentsMail() {
+        String filePath = "G:\\app\\depLogs\\cgservice\\cg-service.log";
+        mailService.sendAttachmentsMail("chencong@jytpay.com", "邮件标题", "测试邮件附件", filePath);
     }
 
     @Test
-    public void sendAttachmentsMail(){
-        String filePath = "G:\\app\\depLogs\\cgservice\\cg-service.log";
-        mailService.sendAttachmentsMail("chencong@jytpay.com","邮件标题","测试邮件附件",filePath);
+    public void sendInlineResourceMail() {
+        String rscId = "neo006";
+        String content = "<html><body>这是有图片的邮件：<img src='cid:" + rscId + "' ></body></html>";
+        String imgPath = "F:\\11.jpg";
+        mailService.sendInlineResourceMail("chencong@jytpay.com", "这是一封带有静态图片的邮件", content, imgPath, rscId);
     }
 }

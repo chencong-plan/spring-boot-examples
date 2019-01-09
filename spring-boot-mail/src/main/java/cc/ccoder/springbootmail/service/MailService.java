@@ -34,4 +34,15 @@ public interface MailService {
      * @param filePath 邮件附件文件路径
      */
     void sendAttachmentsMail(String to, String subject, String content, String filePath);
+
+    /**
+     * 发送带有静态资源的邮件,一般指图片
+     *
+     * @param to      收件人
+     * @param subject 邮件标题
+     * @param content 邮件内容
+     * @param rscPath 静态资源路径
+     * @param rscId
+     */
+    void sendInlineResourceMail(String to, String subject, String content, String rscPath, String rscId);
 }
