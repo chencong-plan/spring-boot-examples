@@ -32,3 +32,6 @@ mvnw.cmd
 *.iws
 *.iml
 *.ipr
+
+# vscode
+.vscode
