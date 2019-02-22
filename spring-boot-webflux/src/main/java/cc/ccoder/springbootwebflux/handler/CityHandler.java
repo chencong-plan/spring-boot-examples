@@ -56,7 +56,7 @@ public class CityHandler {
      * @param city
      * @return
      */
-    public Mono<Long> modify(City city) {
+    public Mono<Long> modifyCity(City city) {
         return Mono.create(cityMonoSink -> cityMonoSink.success(cityRepository.updateCity(city)));
     }
 
