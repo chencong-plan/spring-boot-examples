@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/paging.css}">
+</head>
+<body class="container">
+<h1>用户列表</h1>
+<br><br>
+<div class="width:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Age</th>
+            <th>Edit</th>
+            <th>Save</th>
+        </tr>
+        </thead>
+        <tbody class="table-user-body">
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="pagger-box pagger" id="box"></div>
+</div>
+<script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/paging.js}"></script>
+<script>
+    var setTotalCount = 1000;
+    $('#box').paging({
+        initPageNo: 3, // 初始页码
+        totalPages: 3, //总页数
+        totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+        slideSpeed: 600, // 缓动速度。单位毫秒
+        jump: true, //是否支持跳转
+        callback: function(page) { // 回调函数
+            console.log(page);
+        }
+    })
+</script>
+</body>
+</html>
