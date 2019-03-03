@@ -17,8 +17,6 @@
             <th>Username</th>
             <th>Password</th>
             <th>Age</th>
-            <th>Edit</th>
-            <th>Save</th>
         </tr>
         </thead>
         <tbody class="table-user-body">
@@ -31,17 +29,88 @@
 <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/paging.js}"></script>
 <script>
-    var setTotalCount = 1000;
-    $('#box').paging({
-        initPageNo: 3, // 初始页码
-        totalPages: 3, //总页数
-        totalCount: '合计' + setTotalCount + '条数据', // 条目总数
-        slideSpeed: 600, // 缓动速度。单位毫秒
-        jump: true, //是否支持跳转
-        callback: function(page) { // 回调函数
-            console.log(page);
+    /*
+    * 1、进入到这个页面就需要Ajax查询数据 同时pageNum 和  pageSize是固定的
+    * 2、对Ajax查询的数据通过回调方法callback 进行渲染
+    * 3、将Ajax查询数据赋值给paging方法 比如 pageNum当前页数
+
+    * */
+
+    /*程序入口
+    * 加载默认参数var page={}
+    * 查询数据queryData(page)
+    *   - 查询成功后渲染数据 applyData(data)
+    * 分页方法pagination(data)
+    *   - 分页的回调函数中查询数据 queryData(page)
+    * */
+    $(document).ready(function () {
+        var page = {
+            pageNum: 1,
+            pageSize: 5
+        };
+        queryData(page);
+    });
+
+    /*
+    * 查询数据方法
+    * */
+    function queryData(page) {
+        $.ajax({
+            url: '/page/user',
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                pageNum: page.pageNum,
+                pageSize: page.pageSize
+            },
+            success: function (data) {
+                //查询成功进行渲染
+                applyTable(data)
+                page.pageNum = data.pageNum;
+                page.pageSize = data.pageSize;
+                pagination(data,page);
+            }
+        });
+    }
+
+    /*
+    * 分页方法
+    * */
+    function pagination(data, page) {
+        $('#box').paging({
+            initPageNo: data.pageNum, // 初始页码
+            totalPages: data.totalPages, //总页数
+            totalCount: '合计' + data.totalCount + '条数据', // 条目总数
+            slideSpeed: 600, // 缓动速度。单位毫秒
+            jump: true, //是否支持跳转
+            callback: function (num) { // 回调函数
+                //回调函数中 继续查询数据
+                // 当前页数 是点击的回调函数传递的
+                page.pageNum = num;
+                queryData(page)
+            }
+        });
+    }
+
+    /**
+     * 渲染数据
+     * @param pageData
+     */
+    function applyTable(data) {
+        console.log(data);
+        var result = data.result;
+        var $tbody = $('.table-user-body');
+        for(var i = 0;i<result.length;i++){
+            var $tr = "<tr>\n" +
+                            "<th>"+result[i].id+"</th>\n" +
+                            "<th>"+result[i].username+"</th>\n" +
+                            "<th>"+result[i].password+"</th>\n" +
+                            "<th>"+result[i].age+"</th>\n"
+                      "</tr>";
+            $tbody.append($tr);
         }
-    })
+
+    }
 </script>
 </body>
 </html>
